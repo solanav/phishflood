@@ -1,0 +1,222 @@
+<!DOCTYPE html><html data-bs-theme="light"><head>
+  <title>Phishing Analyzer</title>
+  <link rel="icon" type="image/x-icon" href="/static/logo.png">
+
+  <script>
+    if(localStorage.getItem('theme') == "dark") {
+      document.documentElement.setAttribute('data-bs-theme','dark');
+    } else {
+      document.documentElement.setAttribute('data-bs-theme','light');
+    }
+  </script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/static/bootstrap.min.css">
+  <link rel="stylesheet" href="/static/bootstrap-icons.css">
+  <link rel="stylesheet" href="/static/flag-icon.css">
+<style>                      .htmx-indicator{opacity:0;transition: opacity 200ms ease-in;}                      .htmx-request .htmx-indicator{opacity:1}                      .htmx-request.htmx-indicator{opacity:1}                    </style></head>
+
+<body class="pb-4">
+  <header>
+    <div class="progress" role="progressbar" id="progressBar" style="height: 5px; border-radius: 0px;">
+      <div class="progress-bar" id="queryProgress" style="width: 0%; transition: all 0s ease 0s;"></div>
+    </div>
+
+    
+
+  </header>
+  <main class="bd-main order-1 h-100">
+    <div class="container h-100">
+      
+
+    
+
+    <div class="login-signin text-center d-flex w-100 h-100">
+        <form class="form-signin" method="post" action="/accounts/login/">
+            <input type="hidden" name="csrfmiddlewaretoken" value="efivzWFxaZtXaSK4TGuh5tbQSETsnHAb0RQzV4altv0rhQQVTnaEvjd4rMlWf3iS">
+            <img class="mb-4" src="/static/logo.png" alt="" width="72" height="72">
+            <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+        
+            <div class="form-floating">
+                <input type="text" class="form-control" id="id_username" name="username" placeholder="Username">
+                <label for="floatingInput">Username</label>
+            </div>
+
+            <div class="form-floating">
+                <input type="password" class="form-control" id="id_password" name="password" placeholder="Password">
+                <label for="floatingPassword">Password</label>
+            </div>
+
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+            <input type="hidden" name="next" value="/">
+        </form>
+    </div>
+    
+    <style>
+        html,
+        body {
+          height: 100%;
+          background-color: var(--bs-body-bg);
+        }
+        
+        .form-signin {
+            align-items: center;
+            width: 100%;
+            max-width: 330px;
+            padding: 15px;
+            padding-bottom: 6em;
+            margin: auto;
+        }
+        
+        .form-signin .checkbox {
+          font-weight: 400;
+        }
+        
+        .form-signin .form-floating:focus-within {
+          z-index: 2;
+        }
+        
+        .form-signin input[type="text"] {
+          margin-bottom: -1px;
+          border-bottom-right-radius: 0;
+          border-bottom-left-radius: 0;
+        }
+        
+        .form-signin input[type="password"] {
+          margin-bottom: 10px;
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
+        }
+    </style>
+
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+        <div class="col-md-4 d-flex align-items-center">
+          <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+            <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
+          </a>
+          <span class="mb-3 mb-md-0 text-muted">© 2023 Deloitte Touche Tohmatsu Limited</span>
+        </div>
+    
+        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+          <li class="ms-3 text-muted">Queue size:
+            
+            <span class="elastic-count dontSubOne" data-query="phishing_indicator%3A&quot;-2&quot;">?</span></li>
+          <li class="ms-3 text-muted">Active workers: <span class="elastic-count dontSubOne" data-query="phishing_indicator%3A&quot;-3&quot;">?</span></li>
+        </ul>
+      </footer>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JavaScript Libraries -->
+  <script src="/static/bootstrap.bundle.min.js">
+  </script>
+
+  <!-- HTMX -->
+  <script src="/static/htmx.min.js"></script>
+
+  <script>
+    $(function () {
+      $("#queryProgress")[0].style.transition = "0s";
+      $('#queryProgress')[0].style.width = "0%";
+
+      $('.elastic-count').each(function (i, x) {
+        const query = x.getAttribute('data-query')
+        const dontSubOne = x.classList.contains("dontSubOne");
+        $.get(`/api/v1/count/?query=${query}`, function (res) {
+          if (i == 0) {
+            $("#queryProgress")[0].style.transition = "width 0.6s ease";
+          }
+
+          var c = res.count - 1;
+          if (dontSubOne) {
+            c++;
+          }
+    
+          if (c > 99) {
+            x.innerHTML = '99+'
+          } else {
+            x.innerHTML = `${c}`
+          }
+
+          let completed = $('.elastic-count-complete').length
+          let total = $('.elastic-count').length - 1;
+          let progress = (completed/total) * 100;
+
+          $('#queryProgress')[0].style.width = `${progress}%`;
+
+          x.classList.add("elastic-count-complete")
+        })
+      })
+    })
+
+    document.getElementById('btnSwitch').addEventListener('click',()=>{
+      if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
+          document.documentElement.setAttribute('data-bs-theme','light');
+          localStorage.setItem('theme', "light");
+          
+          btn = document.getElementById('btnSwitch');
+          btn.innerHTML = '<i class="bi bi-moon" id="btnSwitchIcon"></i>';
+      }
+      else {
+          document.documentElement.setAttribute('data-bs-theme','dark');
+          localStorage.setItem('theme', "dark");
+          
+          btn = document.getElementById('btnSwitch');
+          btn.innerHTML = '<i class="bi bi-sun" id="btnSwitchIcon"></i>';
+      }
+    })
+
+    function swapClipboardIcon(element) {
+      if (element.classList.contains("bi-clipboard-plus")) {
+        element.classList.remove("bi-clipboard-plus");
+        element.classList.add("bi-clipboard-check");
+        
+        window.setTimeout ( function() { swapClipboardIcon(element); }, 1000);
+      } else if (element.classList.contains("bi-clipboard-check")) {
+        element.classList.remove("bi-clipboard-check");
+        element.classList.add("bi-clipboard-plus");
+      }
+    }
+
+    
+    function copyText(element, text) {
+      let textArea = document.createElement('textarea')
+      textArea.value = text
+    
+      // Avoid scrolling to bottom
+      textArea.style.top = '0'
+      textArea.style.left = '0'
+      textArea.style.position = 'fixed'
+    
+      document.body.appendChild(textArea)
+      textArea.focus()
+      textArea.select()
+    
+      try {
+        let successful = document.execCommand('copy')
+        let msg = successful ? 'successful' : 'unsuccessful'
+        swapClipboardIcon(element);
+      } catch (err) {
+        console.error('Oops, unable to copy', err)
+      }
+    
+      document.body.removeChild(textArea)
+    }
+  </script>
+
+  
+  
+
+
+</body></html>

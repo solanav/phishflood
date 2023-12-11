@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  flooder:
+    image: phishflood-flooder:latest
+    build:
+      context: ../
+    shm_size: 2g
+    env_file:
+      - ../.env
+    cap_add: 
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+    depends_on:
+      - rabbitmq
+      - psql
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+      - "127.0.0.1:5672:5672"
+      - "127.0.0.1:15672:15672"
+
+  psql:
+    image: postgres:13.7-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - phishflood-db:/var/lib/postgresql/data
+    ports:
+      - "0.0.0.0:5432:5432"
+
+
+volumes:
+  phishflood-db:
+    driver: local
