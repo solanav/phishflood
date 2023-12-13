@@ -1,9 +1,9 @@
 from bs4 import BeautifulSoup
-from typing import List
+from typing import List, Tuple
 from credfind.objects import Form, Input
 
 
-def extract_inputs(html: str) -> List[Input]:
+def extract_inputs(html: str) -> List[Tuple[Form, Input]]:
     """Takes a string of html and extracts all forms and inputs"""
     soup = BeautifulSoup(html, "html.parser")
     

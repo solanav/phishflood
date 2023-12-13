@@ -1,18 +1,19 @@
-from pprint import pprint
 from typing import List
 from credfind.utils import extract_inputs
-from credfind.objects import Input
+from credfind.objects import Input, InputType
 from playwright.sync_api import sync_playwright
-from base64 import b64encode
-from hashlib import sha256
+
+from credgen.utils import creds_from_input
 
 
 def extract_inputs_from_url(url: str) -> List[Input]:
     """Given a URL, starts a browser, visits the page, extracts the html and calls extract_inputs for that html"""
     with sync_playwright() as p:
+        # Setup the browser
         browser = p.chromium.launch()
         page = browser.new_page()
         
+        # Visit the site
         print(f"Visiting {url}")
         try:
             res = page.goto(url)
@@ -21,21 +22,25 @@ def extract_inputs_from_url(url: str) -> List[Input]:
             return []
         print(f"Result: {res.status}")
         
-        page.screenshot(path="example.png")
+        # Get a first screenshot
+        page.wait_for_timeout(3000)
+        page.screenshot(path="samples/01.png")
         
+        # Get html and extract the inputs
         html = page.content()
-        
-        # Save page content for future use
-        fname = sha256(url.encode()).hexdigest()
-        with open(f"pages/{fname}.html", "w") as f:
-            f.write(html)
-        
         inputs = extract_inputs(html)
         
+        # Generate the fake credentials for each form and each input
+        for form, inps in inputs:
+            print(f"Generating for {form}")
+            for inp in inps:
+                if inp.type_ != InputType.HIDDEN:
+                    text = creds_from_input(inp)
+                    print(f"\t{inp} -> {text}")
+                else:
+                    print(f"\t{inp} -> Not filling this one")
+            
         return inputs
     
 if __name__ == "__main__":
-    with open("urls.txt") as f:
-        for url in f.read().splitlines():
-            inputs = extract_inputs_from_url(url)
-            pprint(inputs)
+    inputs = extract_inputs_from_url("https://de-02.phishinganalyzer.com/")

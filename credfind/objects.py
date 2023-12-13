@@ -61,6 +61,9 @@ class Form:
             type_=tag.get("type", None),
         )
     
+    def __str__(self) -> str:
+        return f"{self.__class__.__name__}<action:{self.action}, method:{self.method}, type:{self.type_}>"
+    
 @dataclass
 class Input:
     id_: str
@@ -78,4 +81,4 @@ class Input:
         )
     
     def __str__(self) -> str:
-        return f"{self.type_}<{self.id_}, {self.name_}, {self.placeholder}>"
+        return f"{self.__class__.__name__}<id:{self.id_}, type:{self.type_.value}, name:{self.name}, placeholder:{self.placeholder}>"
