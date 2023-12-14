@@ -1,15 +1,23 @@
+import zstandard
+import io
 from typing import List
 from credfind.objects import Input, InputType
 from random import choice, choices
 
 print("Loading passwords to RAM...")
-with open("data/rockyou.txt", "r", encoding="latin-1") as f:
-    PASSWORDS = [l for l in f.read().splitlines() if l != ""]
+with open("data/passwords.txt.zst", "rb") as f:
+    dctx = zstandard.ZstdDecompressor()
+    stream_reader = dctx.stream_reader(f)
+    text_stream = io.TextIOWrapper(stream_reader, encoding='latin-1')
+    PASSWORDS = [l for l in text_stream if l != ""]
 print("Done loading passwords")
 
 print("Loading emails to RAM...")
-with open("data/rockyou.txt", "r", encoding="latin-1") as f:
-    EMAILS = [l for l in f.read().splitlines() if "@" in l]
+with open("data/emails.txt.zst", "rb") as f:
+    dctx = zstandard.ZstdDecompressor()
+    stream_reader = dctx.stream_reader(f)
+    text_stream = io.TextIOWrapper(stream_reader, encoding='latin-1')
+    EMAILS = [l for l in text_stream if "@" in l]
 print("Done loading emails")
 
 def in_any(s: str, l: List[str]) -> bool:
