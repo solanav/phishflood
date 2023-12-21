@@ -98,7 +98,7 @@ poetry install
 ### Run PhishFlood
 
 ```bash
-poetry run python -m phishflood --url example.org
+poetry run python -m phishflood example.org
 ```
 
 PhishFlood will launch a Playwright browser instance in the background and start filling in fake credentials on known phishing websites. Make sure to use this tool only in a controlled environment and for educational purposes.
