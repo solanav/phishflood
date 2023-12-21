@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from bs4.element import Tag
-from typing import Optional, Self
+from typing import Any, Dict, List, Optional, Self, Tuple
 from enum import Enum
 
 class InputType(Enum):
@@ -69,6 +69,15 @@ class Form:
     def __str__(self) -> str:
         return f"{self.__class__.__name__}<({self.meta_id}), id:{self.id_}, action:{self.action}, method:{self.method}, type:{self.type_}>"
     
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "meta_id": self.meta_id,
+            "id": self.id_,
+            "action": self.action,
+            "method": self.method.value,
+            "type": self.type_,
+        }
+    
 @dataclass
 class Input:
     id_: Optional[str] = None
@@ -89,3 +98,15 @@ class Input:
     
     def __str__(self) -> str:
         return f"{self.__class__.__name__}<({self.meta_id}), id:{self.id_}, type:{self.type_.value}, name:{self.name}, placeholder:{self.placeholder}>"
+    
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "meta_id": self.meta_id,
+            "id": self.id_,
+            "name": self.name,
+            "placeholder": self.placeholder,
+            "type": self.type_.value,
+        }
+
+
+InputList = List[Tuple[int, Form, List[Input]]]

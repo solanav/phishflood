@@ -64,8 +64,8 @@ def fake_email() -> str:
     
     return f"{username}@{choice(email_providers)}"
 
-def fake_key(digits: int=6) -> str:
-    """Generates a random key of digits length"""
+def fake_number(digits: int=6) -> str:
+    """Generates a random number of digits length"""
     return ''.join(choices([str(n) for n in range(10)], k=digits))
 
 def fake_password() -> str:
@@ -82,9 +82,10 @@ def fake_dni() -> str:
     
     return f"{nums}{letter}"
 
-def fake_random(len: int) -> str:
+def fake_letters(len: int) -> str:
     """Generates a random string"""
-    return ''.join(choices([str(n) for n in range(10)], k=len))
+    LETTERS = "abcdefghijklmnopqrstuvwxyz"
+    return ''.join(choices([str(n) for n in LETTERS], k=len))
 
 def creds_from_input(inp: Input) -> str:
     # Check by keywords
@@ -92,11 +93,11 @@ def creds_from_input(inp: Input) -> str:
     
     if in_any(["email"], text_fields):
         return fake_email()
-    elif in_any(["code", "key"], text_fields):
-        return fake_key()
+    elif in_any(["code", "key", "pin"], text_fields):
+        return fake_number(6)
     elif in_any(["password"], text_fields):
         return fake_password()
-    elif in_any(["user"], text_fields):
+    elif in_any(["user", "uid"], text_fields):
         return fake_username()
     elif in_any(["document", "dni"], text_fields):
         return fake_dni()
@@ -107,5 +108,7 @@ def creds_from_input(inp: Input) -> str:
             return fake_email()
         case InputType.PASSWORD:
             return fake_password()
+        case InputType.TEL:
+            return fake_number(12)
     
-    return fake_random(10)
+    return fake_letters(10)
