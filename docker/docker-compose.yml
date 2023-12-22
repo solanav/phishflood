@@ -1,13 +1,20 @@
 version: '3.8'
 
 services:
-  flooder:
-    image: phishflood-flooder:latest
+  api:
+    image: phishflood-api:latest
     build:
       context: ../
-    shm_size: 2g
-    env_file:
-      - ../.env
+      dockerfile: docker/Dockerfile.api
+    depends_on:
+      - rabbitmq
+      - psql
+
+  worker:
+    image: phishflood-worker:latest
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile.worker
     cap_add: 
       - NET_ADMIN
     devices:

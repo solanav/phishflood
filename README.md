@@ -2,6 +2,8 @@
 
 PhishFlood is a Python tool that utilizes the Playwright library to automate the process of filling phishing websites with fake credentials. This project is designed for educational and research purposes only. Please use it responsibly and ethically.
 
+> **_NOTE_** This tool is meant for educational and research purposes only. Unauthorized use of this tool is strictly prohibited. The developers are not responsible for any misuse or damage caused by this tool.
+
 ## Table of content
 - [PhishFlood](#phishflood)
   - [Table of content](#table-of-content)
@@ -11,10 +13,11 @@ PhishFlood is a Python tool that utilizes the Playwright library to automate the
     - [Clone the Repository](#clone-the-repository)
     - [Install Dependencies with Poetry](#install-dependencies-with-poetry)
   - [Usage](#usage)
-    - [Run PhishFlood](#run-phishflood)
+    - [Running CLI](#running-cli)
+    - [Running the API](#running-the-api)
   - [Testing](#testing)
-  - [Disclaimer](#disclaimer)
   - [Contributing](#contributing)
+    - [Architecture](#architecture)
   - [License](#license)
 
 ## Demo
@@ -95,13 +98,19 @@ poetry install
 
 ## Usage
 
-### Run PhishFlood
+### Running CLI
 
 ```bash
 poetry run python -m phishflood example.org
 ```
 
-PhishFlood will launch a Playwright browser instance in the background and start filling in fake credentials on known phishing websites. Make sure to use this tool only in a controlled environment and for educational purposes.
+PhishFlood will launch a Playwright browser instance in the background and start filling in fake credentials on known phishing websites. The results will be stored on the `samples/` directory.
+
+### Running the API
+
+```bash
+docker compose -f docker/docker-compose.yml up --build
+```
 
 ## Testing
 
@@ -113,13 +122,23 @@ poetry run pytest
 
 Make sure to have a controlled testing environment, as the tests involve interactions with websites.
 
-## Disclaimer
-
-This tool is meant for educational and research purposes only. Unauthorized use of this tool is strictly prohibited. The developers are not responsible for any misuse or damage caused by this tool.
-
 ## Contributing
 
 If you would like to contribute to this project, please open an issue or submit a pull request. We welcome any suggestions, improvements, or bug fixes.
+
+### Architecture
+
+Here is a general overview of the code in this repository so you have an easier time contributing:
+- `api/`: django project that provides the API to submit new cases and retrieve results.
+- `credfind/`: module that finds forms and inputs in a given HTML source file.
+- `credgen/`: module that generates random (realistic) credentials for inputs found in `credfind`.
+- `data/`: folder with emails and passwords for the `credgen` module.
+- `docker/`: contains the docker-compose and Dockerfiles necesary to get up and running the service.
+- `pages/`: HTML sites to test the modules.
+- `phishflood/`: main module that glues credfind and credgen, using [playwright](https://github.com/microsoft/playwright-python).
+- `samples/`: output for the information obtained when using the `phishflood` manually as opposed to using it through the API.
+- `tests/`: folder containing the unittests that check everything is behaving as expected.
+- `entrypoint.sh`: script that prepares the django `api` and launches it. Used in `docker/Dockerfile.api`.
 
 ## License
 
