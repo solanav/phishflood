@@ -1,6 +1,6 @@
 # PhishFlood
 
-PhishFlood is a Python tool that utilizes the Playwright library to automate the process of filling phishing websites with fake credentials. This project is designed for educational and research purposes only. Please use it responsibly and ethically.
+PhishFlood is a python tool that uses playwright to automate the process of filling phishing websites with fake credentials.
 
 > **_NOTE_** This tool is meant for educational and research purposes only. Unauthorized use of this tool is strictly prohibited. The developers are not responsible for any misuse or damage caused by this tool.
 
