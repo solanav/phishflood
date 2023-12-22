@@ -75,7 +75,10 @@ def fake_number(digits: int = 6) -> str:
 
 def fake_password() -> str:
     """Generates a random password"""
-    return choice(PASSWORDS)
+    if len(password := choice(PASSWORDS)) >= 8:
+        return password
+    else:
+        return fake_password()
 
 
 def fake_dni() -> str:

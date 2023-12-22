@@ -1,11 +1,12 @@
-class TestCredfind(object):
-    def test_extract_inputs(self):
-        from credfind.utils import extract_inputs
-        from credfind.objects import Form, Input, InputType
+from credfind.utils import extract_inputs
 
-        with open("pages/bbva_generic.html", "r") as f:
-            html = f.read()
 
-        _, inputs = extract_inputs(html)
+def test_extract_inputs():
+    with open("pages/bbva_generic.html", "r") as f:
+        html = f.read()
 
-        assert len(inputs) == 4
+    res = extract_inputs(html)
+    inputs = res[0][2]
+
+    assert len(res) == 1
+    assert len(inputs) == 4
