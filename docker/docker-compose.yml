@@ -1,27 +1,27 @@
 version: '3.8'
 
 services:
-  api:
-    image: phishflood-api:latest
-    build:
-      context: ../
-      dockerfile: docker/Dockerfile.api
-    depends_on:
-      - rabbitmq
-      - psql
+  # api:
+  #   image: phishflood-api:latest
+  #   build:
+  #     context: ../
+  #     dockerfile: docker/Dockerfile.api
+  #   depends_on:
+  #     - rabbitmq
+  #     - psql
 
-  worker:
-    image: phishflood-worker:latest
-    build:
-      context: ../
-      dockerfile: docker/Dockerfile.worker
-    cap_add: 
-      - NET_ADMIN
-    devices:
-      - /dev/net/tun
-    depends_on:
-      - rabbitmq
-      - psql
+  # worker:
+  #   image: phishflood-worker:latest
+  #   build:
+  #     context: ../
+  #     dockerfile: docker/Dockerfile.worker
+  #   cap_add: 
+  #     - NET_ADMIN
+  #   devices:
+  #     - /dev/net/tun
+  #   depends_on:
+  #     - rabbitmq
+  #     - psql
 
   rabbitmq:
     image: rabbitmq:3-management-alpine
@@ -32,12 +32,13 @@ services:
   psql:
     image: postgres:13.7-alpine
     environment:
+      - POSTGRES_DB=phishflood
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     volumes:
       - phishflood-db:/var/lib/postgresql/data
     ports:
-      - "0.0.0.0:5432:5432"
+      - "127.0.0.1:5432:5432"
 
 
 volumes:

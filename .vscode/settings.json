@@ -3,5 +3,6 @@
     "editor.formatOnType": true,
     "[lisp]": {
         "editor.wordSeparators": "`|;:'\",()"
-    }
+    },
+    "python.REPL.enableREPLSmartSend": false
 }

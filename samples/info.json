@@ -1,43 +1,72 @@
 {
-    "url": "https://online.ib-internet-bakingssg.com/",
+    "url": "https://de-02.phishinganalyzer.com/",
+    "html": "...",
     "forms": [
         {
             "meta_id": 0,
             "id": null,
-            "action": null,
-            "method": "none",
+            "action": "/accounts/login/",
+            "method": "post",
             "type": null,
             "inputs": [
                 {
                     "meta_id": 0,
                     "id": null,
-                    "name": "UID",
+                    "name": "csrfmiddlewaretoken",
                     "placeholder": null,
-                    "type": "text"
+                    "type": "hidden"
                 },
                 {
                     "meta_id": 1,
+                    "id": "id_username",
+                    "name": "username",
+                    "placeholder": "Username",
+                    "type": "text"
+                },
+                {
+                    "meta_id": 2,
+                    "id": "id_password",
+                    "name": "password",
+                    "placeholder": "Password",
+                    "type": "password"
+                },
+                {
+                    "meta_id": 3,
                     "id": null,
-                    "name": "pin",
+                    "name": "next",
                     "placeholder": null,
-                    "type": "number"
+                    "type": "hidden"
                 }
             ]
         }
     ],
     "actions": [
         {
-            "action": "fill",
+            "action": "ignore",
             "form": 0,
             "input": 0,
-            "value": "cyber_dragon83",
+            "value": "",
             "status": "success"
         },
         {
             "action": "fill",
             "form": 0,
             "input": 1,
-            "value": "383510",
+            "value": "tinon2003",
+            "status": "success"
+        },
+        {
+            "action": "fill",
+            "form": 0,
+            "input": 2,
+            "value": "steawart",
+            "status": "success"
+        },
+        {
+            "action": "ignore",
+            "form": 0,
+            "input": 3,
+            "value": "",
             "status": "success"
         }
     ]
