@@ -201,7 +201,7 @@ def extract_inputs_from_url(url: str) -> Optional[Dict[str, Any]]:
                 "html_method": form["method"],
                 "html_type": form["type"],
             }
-            
+
             print(f"Uploading form {raw_form}")
             res = requests.post(
                 general_conf.API_URL + "form/",
@@ -259,11 +259,13 @@ def rabbit_callback(body):
         url = body["url"]
         print(f"Extracting inputs from {url}")
         data = extract_inputs_from_url(body["url"])
-        os.rename("samples/output.gif", f"samples/{sha256(url.encode()).hexdigest()}.gif")
+        os.rename(
+            "samples/output.gif", f"samples/{sha256(url.encode()).hexdigest()}.gif"
+        )
         print(f"Done with {url}")
     except:
         pass
-    
+
     # Reset screenshot counter
     SCREENSHOT_I = 0
 
