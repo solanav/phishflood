@@ -108,9 +108,13 @@ PhishFlood will launch a Playwright browser instance in the background and start
 
 ### Running the API
 
+To start the API and all required componets (RabbitMQ, PostgreSQL and the workers) you can run:
+
 ```bash
 docker compose -f docker/docker-compose.yml up --build
 ```
+
+The API will be running in `localhost:8000` and you can start exploring the different endpoints through the web UI.
 
 ## Testing
 
