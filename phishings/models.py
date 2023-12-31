@@ -6,7 +6,7 @@ class Phishing(models.Model):
     id = models.CharField(
         max_length=255, primary_key=True, default=None, editable=False
     )
-    url = models.URLField()
+    url = models.URLField(max_length=512)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):

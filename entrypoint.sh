@@ -13,4 +13,4 @@ echo "Creating admin user..."
 echo "from django.contrib.auth.models import User; User.objects.filter(email='admin@phishflood.com').delete(); User.objects.create_superuser('admin', 'admin@phishflood.com', 'phishflood')" | poetry run python manage.py shell
 
 echo "Runnning gunicorn..."
-poetry run gunicorn phishing_analyzer.wsgi:application -w 8 --bind 0.0.0.0:8000
+poetry run gunicorn api.wsgi:application -w 8 --bind 0.0.0.0:8000

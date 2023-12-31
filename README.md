@@ -22,8 +22,8 @@ PhishFlood is a python tool that uses playwright to automate the process of fill
 
 ## Demo
 
-Example gif:
-![](./output.gif)
+Example page interaction:
+![](images/output.gif)
 
 Example output:
 ```json
@@ -111,10 +111,17 @@ PhishFlood will launch a Playwright browser instance in the background and start
 To start the API and all required componets (RabbitMQ, PostgreSQL and the workers) you can run:
 
 ```bash
-docker compose -f docker/docker-compose.yml up --build
+docker compose -f docker/docker-compose.yml --compatibility up --build
 ```
 
-The API will be running in `localhost:8000` and you can start exploring the different endpoints through the web UI.
+The API will be running in `localhost:8000` and you can start exploring the different endpoints through the web UI:
+
+![Alt text](images/api_root.png)
+
+And here is a sample of one of the endpoints
+
+![Alt text](images/action_list.png)
+
 
 ## Testing
 

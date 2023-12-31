@@ -40,4 +40,4 @@ RUN poetry run playwright install
 COPY --chown=nonroot:nonroot . /home/nonroot/$PROJECT_NAME
 
 # Entrypoint
-CMD poetry run python -m phishflood
+CMD poetry run python -m phishflood worker

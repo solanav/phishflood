@@ -1,27 +1,31 @@
 version: '3.8'
 
 services:
-  # api:
-  #   image: phishflood-api:latest
-  #   build:
-  #     context: ../
-  #     dockerfile: docker/Dockerfile.api
-  #   depends_on:
-  #     - rabbitmq
-  #     - psql
+  api:
+    image: phishflood-api:latest
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile.api
+    depends_on:
+      - rabbitmq
+      - psql
+    ports:
+      - "127.0.0.1:8000:8000"
 
-  # worker:
-  #   image: phishflood-worker:latest
-  #   build:
-  #     context: ../
-  #     dockerfile: docker/Dockerfile.worker
-  #   cap_add: 
-  #     - NET_ADMIN
-  #   devices:
-  #     - /dev/net/tun
-  #   depends_on:
-  #     - rabbitmq
-  #     - psql
+  worker:
+    image: phishflood-worker:latest
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile.worker
+    deploy:
+      replicas: 6
+    cap_add: 
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+    depends_on:
+      - rabbitmq
+      - psql
 
   rabbitmq:
     image: rabbitmq:3-management-alpine
