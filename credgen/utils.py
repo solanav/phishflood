@@ -70,7 +70,7 @@ def fake_email() -> str:
 
 def fake_number(digits: int = 6) -> str:
     """Generates a random number of digits length"""
-    return "".join(choices([str(n) for n in range(10)], k=digits))
+    return "".join(choices("0123456789", k=digits))
 
 
 def fake_password() -> str:
@@ -86,7 +86,7 @@ def fake_dni() -> str:
     key = "TRWAGMYFPDXBNJZSQVHLCKET"
     mod_key = 23
 
-    nums = "".join(choices([str(n) for n in range(10)], k=8))
+    nums = "".join(choices("0123456789", k=8))
     letter = key[int(nums) % mod_key]
 
     return f"{nums}{letter}"

@@ -23,7 +23,7 @@ PhishFlood is a python tool that uses playwright to automate the process of fill
 ## Demo
 
 Example page interaction:
-![](images/output.gif)
+![](images//output.gif)
 
 Example output:
 ```json
@@ -120,7 +120,7 @@ The API will be running in `localhost:8000` and you can start exploring the diff
 
 And here is a sample of one of the endpoints
 
-![Alt text](images/action_list.png)
+![Alt text](images//action_list.png)
 
 
 ## Testing
