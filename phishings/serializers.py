@@ -26,6 +26,7 @@ class FormSerializer(serializers.ModelSerializer):
         model = Form
         fields = [
             "phishing",
+            "page",
             "meta_id",
             "html_id",
             "html_action",

@@ -229,7 +229,7 @@ def extract_inputs_from_url(url: str) -> Optional[Dict[str, Any]]:
                 json=raw_form,
                 headers=auth_headers,
             )
-            print(f"Uploaded form: {res.status_code}, {res.text}")
+            print(f"Uploaded form: {res.status_code}")
 
             for input_ in form["inputs"]:
                 print(f"Uploading input {input_}")
