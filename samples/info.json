@@ -1,39 +1,172 @@
 {
-    "url": "https://de-02.phishinganalyzer.com/",
+    "url": "https://www.cekilisekatils.com/",
     "html": "...",
     "forms": [
         {
             "meta_id": 0,
             "id": null,
-            "action": "/accounts/login/",
+            "action": "kayit.php",
             "method": "post",
             "type": null,
+            "page": 0,
             "inputs": [
                 {
                     "meta_id": 0,
                     "id": null,
-                    "name": "csrfmiddlewaretoken",
+                    "name": "token",
                     "placeholder": null,
                     "type": "hidden"
                 },
                 {
                     "meta_id": 1,
-                    "id": "id_username",
+                    "id": "username",
                     "name": "username",
-                    "placeholder": "Username",
+                    "placeholder": "T.C. Kimlik / M\u00fc\u015fteri Numaran\u0131z",
+                    "type": "tel"
+                },
+                {
+                    "meta_id": 2,
+                    "id": "ctl00_c_RetailRememberMeCheckBox",
+                    "name": "ctl00$c$RetailRememberMeCheckBox",
+                    "placeholder": null,
+                    "type": "checkbox"
+                },
+                {
+                    "meta_id": 3,
+                    "id": "password",
+                    "name": "password",
+                    "placeholder": "\u015eifre",
+                    "type": "password"
+                }
+            ]
+        },
+        {
+            "meta_id": 0,
+            "id": null,
+            "action": "yonlendir.php",
+            "method": "post",
+            "type": null,
+            "page": 1,
+            "inputs": [
+                {
+                    "meta_id": 0,
+                    "id": null,
+                    "name": "token",
+                    "placeholder": null,
+                    "type": "hidden"
+                },
+                {
+                    "meta_id": 1,
+                    "id": "adsoyad",
+                    "name": "adsoyad",
+                    "placeholder": "Ad Soyad",
                     "type": "text"
                 },
                 {
                     "meta_id": 2,
-                    "id": "id_password",
-                    "name": "password",
-                    "placeholder": "Password",
-                    "type": "password"
+                    "id": "password",
+                    "name": "telefon",
+                    "placeholder": "Kay\u0131tl\u0131 Telefon Numaras\u0131",
+                    "type": "tel"
+                }
+            ]
+        },
+        {
+            "meta_id": 0,
+            "id": null,
+            "action": "./ZOSignLogin.aspx",
+            "method": "post",
+            "type": null,
+            "page": 2,
+            "inputs": [
+                {
+                    "meta_id": 0,
+                    "id": "__EVENTTARGET",
+                    "name": "__EVENTTARGET",
+                    "placeholder": null,
+                    "type": "hidden"
+                },
+                {
+                    "meta_id": 1,
+                    "id": "__EVENTARGUMENT",
+                    "name": "__EVENTARGUMENT",
+                    "placeholder": null,
+                    "type": "hidden"
+                },
+                {
+                    "meta_id": 2,
+                    "id": "__VSTATE",
+                    "name": "__VSTATE",
+                    "placeholder": null,
+                    "type": "hidden"
                 },
                 {
                     "meta_id": 3,
-                    "id": null,
-                    "name": "next",
+                    "id": "__VIEWSTATE",
+                    "name": "__VIEWSTATE",
+                    "placeholder": null,
+                    "type": "hidden"
+                },
+                {
+                    "meta_id": 4,
+                    "id": "__EVENTVALIDATION",
+                    "name": "__EVENTVALIDATION",
+                    "placeholder": null,
+                    "type": "hidden"
+                },
+                {
+                    "meta_id": 5,
+                    "id": "TabInstanceUniqueKey",
+                    "name": "ctl00$TabInstanceUniqueKey",
+                    "placeholder": null,
+                    "type": "hidden"
+                },
+                {
+                    "meta_id": 6,
+                    "id": "NavigationHiddenInput",
+                    "name": "ctl00$NavigationHiddenInput",
+                    "placeholder": null,
+                    "type": "hidden"
+                },
+                {
+                    "meta_id": 7,
+                    "id": "HdnClientParametersCacheKey",
+                    "name": "ctl00$HdnClientParametersCacheKey",
+                    "placeholder": null,
+                    "type": "hidden"
+                },
+                {
+                    "meta_id": 8,
+                    "id": "HdnCurrentCulture",
+                    "name": "ctl00$HdnCurrentCulture",
+                    "placeholder": null,
+                    "type": "hidden"
+                },
+                {
+                    "meta_id": 9,
+                    "id": "HiddenIsIOSDevice",
+                    "name": "ctl00$HiddenIsIOSDevice",
+                    "placeholder": null,
+                    "type": "hidden"
+                },
+                {
+                    "meta_id": 10,
+                    "id": "ctl00_HdnBaseUrl",
+                    "name": "ctl00$HdnBaseUrl",
+                    "placeholder": null,
+                    "type": "hidden"
+                },
+                {
+                    "meta_id": 11,
+                    "id": "zrt_user_prefs",
+                    "name": "ctl00$zrt_user_prefs",
+                    "placeholder": null,
+                    "type": "hidden"
+                },
+                {
+                    "meta_id": 12,
+                    "id": "user_prefs2",
+                    "name": "ctl00$user_prefs2",
                     "placeholder": null,
                     "type": "hidden"
                 }
@@ -43,6 +176,7 @@
     "actions": [
         {
             "action": "ignore",
+            "page": 0,
             "form": 0,
             "input": 0,
             "value": "",
@@ -50,22 +184,153 @@
         },
         {
             "action": "fill",
+            "page": 0,
             "form": 0,
             "input": 1,
-            "value": "tinon2003",
-            "status": "success"
-        },
-        {
-            "action": "fill",
-            "form": 0,
-            "input": 2,
-            "value": "steawart",
+            "value": "jmars34",
             "status": "success"
         },
         {
             "action": "ignore",
+            "page": 0,
+            "form": 0,
+            "input": 2,
+            "value": "",
+            "status": "success"
+        },
+        {
+            "action": "fill",
+            "page": 0,
             "form": 0,
             "input": 3,
+            "value": "hip-hoper",
+            "status": "success"
+        },
+        {
+            "action": "ignore",
+            "page": 1,
+            "form": 0,
+            "input": 0,
+            "value": "",
+            "status": "success"
+        },
+        {
+            "action": "fill",
+            "page": 1,
+            "form": 0,
+            "input": 1,
+            "value": "gqkxinfuhh",
+            "status": "success"
+        },
+        {
+            "action": "fill",
+            "page": 1,
+            "form": 0,
+            "input": 2,
+            "value": "loren1994",
+            "status": "success"
+        },
+        {
+            "action": "ignore",
+            "page": 2,
+            "form": 0,
+            "input": 0,
+            "value": "",
+            "status": "success"
+        },
+        {
+            "action": "ignore",
+            "page": 2,
+            "form": 0,
+            "input": 1,
+            "value": "",
+            "status": "success"
+        },
+        {
+            "action": "ignore",
+            "page": 2,
+            "form": 0,
+            "input": 2,
+            "value": "",
+            "status": "success"
+        },
+        {
+            "action": "ignore",
+            "page": 2,
+            "form": 0,
+            "input": 3,
+            "value": "",
+            "status": "success"
+        },
+        {
+            "action": "ignore",
+            "page": 2,
+            "form": 0,
+            "input": 4,
+            "value": "",
+            "status": "success"
+        },
+        {
+            "action": "ignore",
+            "page": 2,
+            "form": 0,
+            "input": 5,
+            "value": "",
+            "status": "success"
+        },
+        {
+            "action": "ignore",
+            "page": 2,
+            "form": 0,
+            "input": 6,
+            "value": "",
+            "status": "success"
+        },
+        {
+            "action": "ignore",
+            "page": 2,
+            "form": 0,
+            "input": 7,
+            "value": "",
+            "status": "success"
+        },
+        {
+            "action": "ignore",
+            "page": 2,
+            "form": 0,
+            "input": 8,
+            "value": "",
+            "status": "success"
+        },
+        {
+            "action": "ignore",
+            "page": 2,
+            "form": 0,
+            "input": 9,
+            "value": "",
+            "status": "success"
+        },
+        {
+            "action": "ignore",
+            "page": 2,
+            "form": 0,
+            "input": 10,
+            "value": "",
+            "status": "success"
+        },
+        {
+            "action": "ignore",
+            "page": 2,
+            "form": 0,
+            "input": 11,
+            "value": "",
+            "status": "success"
+        },
+        {
+            "action": "ignore",
+            "page": 2,
+            "form": 0,
+            "input": 12,
             "value": "",
             "status": "success"
         }

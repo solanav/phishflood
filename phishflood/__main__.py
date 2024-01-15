@@ -29,7 +29,7 @@ def hash_inputs(inputs: List[Input]) -> str:
 
 
 def flood_page(
-    page: Page, last_hash: str = ""
+    page: Page, last_hash: str = "", page_num: int = 0
 ) -> Optional[Tuple[str, InputList, Actions]]:
     """Returns a unique string identifying the inputs in the website"""
 
@@ -38,7 +38,11 @@ def flood_page(
     screenshot(page)
 
     # Get html and extract the inputs
-    html = page.content()
+    try:
+        html = page.content()
+    except:
+        return None
+    
     res = extract_inputs(html)
     if len(res) > 0:
         fi, form, inputs = res[0]
@@ -81,6 +85,7 @@ def flood_page(
                 actions.append(
                     {
                         "action": "fill",
+                        "page": page_num,
                         "form": form.meta_id,
                         "input": inp.meta_id,
                         "value": text,
@@ -92,6 +97,7 @@ def flood_page(
                 actions.append(
                     {
                         "action": "fill",
+                        "page": page_num,
                         "form": form.meta_id,
                         "input": inp.meta_id,
                         "value": text,
@@ -103,6 +109,7 @@ def flood_page(
             actions.append(
                 {
                     "action": "ignore",
+                    "page": page_num,
                     "form": form.meta_id,
                     "input": inp.meta_id,
                     "value": "",
@@ -116,7 +123,7 @@ def flood_page(
 
     # Submit the form and continue
     form_locator.press("Enter")
-
+    
     return input_hash, res, actions
 
 
@@ -139,11 +146,12 @@ def extract_inputs_from_url(url: str) -> Optional[Dict[str, Any]]:
             return None
         print(f"Result: {res.status}")
 
+        page_num = 0
         forms = []
         actions = []
 
         # Flood the initial page
-        res = flood_page(page)
+        res = flood_page(page, "", page_num)
         if res is None:
             return None
         else:
@@ -151,12 +159,14 @@ def extract_inputs_from_url(url: str) -> Optional[Dict[str, Any]]:
             actions += acts
             for _, f, i in inputs:
                 d = f.to_dict()
+                d["page"] = page_num
                 d["inputs"] = [x.to_dict() for x in i]
                 forms.append(d)
 
         # Flood the next 5 pages too
         for _ in range(5):
-            res = flood_page(page, uid)
+            page_num += 1
+            res = flood_page(page, uid, page_num)
             if res is None:
                 print("No more forms to flood")
                 break
@@ -165,6 +175,7 @@ def extract_inputs_from_url(url: str) -> Optional[Dict[str, Any]]:
                 actions += acts
                 for _, f, i in inputs:
                     d = f.to_dict()
+                    d["page"] = page_num
                     d["inputs"] = [x.to_dict() for x in i]
                     forms.append(d)
 
@@ -188,13 +199,23 @@ def extract_inputs_from_url(url: str) -> Optional[Dict[str, Any]]:
         os.system("rm -f samples/*.png")
 
         auth_headers = {"Authorization": f"Token {general_conf.TOKEN}"}
+        
+        from pprint import pprint; pprint(forms)
 
-        phishing_id = sha256(url.encode()).hexdigest()
+        print(f"Uploading phishing {url}")
+        res = requests.post(
+            general_conf.API_URL + "phishing/",
+            json={"url": url},
+            headers=auth_headers,
+        )
+        phishing_id = res.json()["id"]
+        print(f"Uploaded phishing: {phishing_id}")
 
         # Post forms and inputs to the API
         for form in forms:
             raw_form = {
                 "phishing": phishing_id,
+                "page": form["page"],
                 "meta_id": form["meta_id"],
                 "html_id": form["id"],
                 "html_action": form["action"],
@@ -215,7 +236,7 @@ def extract_inputs_from_url(url: str) -> Optional[Dict[str, Any]]:
                 res = requests.post(
                     general_conf.API_URL + "input/",
                     json={
-                        "form": f"{phishing_id}-{form['meta_id']}",
+                        "form": f"{phishing_id}-{form['page']}-{form['meta_id']}",
                         "meta_id": input_["meta_id"],
                         "html_id": input_["id"],
                         "html_name": input_["name"],
@@ -233,8 +254,8 @@ def extract_inputs_from_url(url: str) -> Optional[Dict[str, Any]]:
                 general_conf.API_URL + "action/",
                 json={
                     "phishing": phishing_id,
-                    "form": f"{phishing_id}-{action['form']}",
-                    "input": f"{phishing_id}-{action['form']}-{action['input']}",
+                    "form": f"{phishing_id}-{action['page']}-{action['form']}",
+                    "input": f"{phishing_id}-{action['page']}-{action['form']}-{action['input']}",
                     "action": action["action"],
                     "value": action["value"],
                     "status": action["status"],

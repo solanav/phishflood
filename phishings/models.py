@@ -18,12 +18,11 @@ class Form(models.Model):
     id = models.CharField(
         max_length=255, primary_key=True, default=None, editable=False
     )
-
     phishing = models.ForeignKey(
         Phishing, on_delete=models.CASCADE, related_name="forms"
     )
-
     meta_id = models.IntegerField()
+    page = models.IntegerField()
 
     html_id = models.CharField(max_length=255, null=True)
     html_action = models.CharField(max_length=255, null=True)
@@ -31,7 +30,7 @@ class Form(models.Model):
     html_type = models.CharField(max_length=255, null=True)
 
     def save(self, *args, **kwargs):
-        self.id = f"{self.phishing.id}-{self.meta_id}"
+        self.id = f"{self.phishing.id}-{self.page}-{self.meta_id}"
         super(Form, self).save(*args, **kwargs)
 
 
